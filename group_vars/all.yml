@@ -1,9 +1,15 @@
+docker_service_manage: false
+
 redmine_port: 80
 
 db_host: private-hexletdb-do-user-33550810-0.f.db.ondigitalocean.com
 db_name: defaultdb
 db_user: doadmin
 db_port: 25060
+
+pip_install_packages:
+  - name: docker
+  - name: requests
 
 db_password: "{{ vault_db_password }}"
 
