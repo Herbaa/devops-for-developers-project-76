@@ -1,34 +1,38 @@
-- hosts: all
+- name: Install and configure Docker and Pip
+  hosts: all
   become: true
-  
+
   pre_tasks:
     - name: Update apt cache
       ansible.builtin.apt:
-        update_cache: yes
+        update_cache: true
       when: ansible_os_family == "Debian"
 
   roles:
     - geerlingguy.pip
     - geerlingguy.docker
-  
+
   tasks:
     - name: Create env file
       ansible.builtin.template:
         src: templates/redmine.env.j2
         dest: /root/redmine.env
+        mode: '0644'
       tags: deploy
 
-    - name: Run redmine 
+    - name: Run redmine
       community.docker.docker_container:
         name: redmine
         image: redmine
         state: started
         restart_policy: always
         ports:
-          - "{{redmine_port}}:3000"
+          - "{{ redmine_port }}:3000"
         env_file: /root/redmine.env
       tags: deploy
-- hosts: webservers
+
+- name: Configure monitoring
+  hosts: webservers
   roles:
     - datadog.datadog
   tags: monitoring
