@@ -1,3 +1,4 @@
+---
 - name: Install and configure Docker and Pip
   hosts: all
   become: true
@@ -17,7 +18,7 @@
       ansible.builtin.template:
         src: templates/redmine.env.j2
         dest: /root/redmine.env
-        mode: '0644'
+        mode: "0644"
       tags: deploy
 
     - name: Run redmine
@@ -36,4 +37,3 @@
   roles:
     - datadog.datadog
   tags: monitoring
-  
