@@ -22,10 +22,7 @@
           - "{{redmine_port}}:3000"
         env_file: /root/redmine.env
       tags: deploy
-
 - hosts: webservers
-  collections:
-    - datadog.dd
   roles:
-    - datadog
+    - datadog.datadog
   tags: monitoring
