@@ -1,1 +1,12 @@
 redmine_port: 80
+
+db_host: private-hexletdb-do-user-33550810-0.f.db.ondigitalocean.com
+db_name: defaultdb
+db_user: doadmin
+db_port: 25060
+
+db_password: "{{ vault_db_password }}"
+
+datadog_api_key: "{{ vault_datadog_api_key }}"
+datadog_site: datadoghq.eu
+
