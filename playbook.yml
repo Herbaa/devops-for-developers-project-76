@@ -1,9 +1,24 @@
 - hosts: all
   become: true
-  
-  vars:
-    pip_install_packages:
-    - name: docker
+
   roles:
     - geerlingguy.pip
     - geerlingguy.docker
+  
+  tasks:
+    - name: Create env file
+      ansible.builtin.template:
+        src: templates/redmine.env.j2
+        dest: /root/redmine.env
+      tags: deploy
+
+    - name: Run redmine 
+      community.docker.docker_container:
+        name: redmine
+        image: redmine
+        state: started
+        restart_policy: always
+        ports:
+          - "{{redmine_port}}:3000"
+        env_file: /root/redmine.env
+      tags: deploy
